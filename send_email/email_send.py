@@ -3,8 +3,8 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.application import MIMEApplication
 
-my_email = "francescosuma05@gmail.com"
-password = "grsyhyuhklnfmrhr"
+my_email = "sender@mail.com"
+password = "pwd"
 
 connection = smtplib.SMTP("smtp.gmail.com", 587)
 connection.starttls()
@@ -16,13 +16,13 @@ message = "Questa mail è stata inviata con uno script python e questo è il cod
 msg = MIMEMultipart()
 msg["Subject"] = subject
 msg["From"] = my_email
-msg["To"] = "nicola.menga.1993@gmail.com"
+msg["To"] = "recipient@mail.com"
 
 # Aggiungi il testo del messaggio
 msg.attach(MIMEText(message, "plain"))
 
 # Aggiungi l'allegato del documento di testo
-with open("C:\\Users\\franc\\Documents\\Coding\\Python\\send_email\\documento.txt", "rb") as f:
+with open("path file", "rb") as f:
     part = MIMEApplication(f.read(), Name="documento.txt")
 part["Content-Disposition"] = f"attachment; filename=documento.txt"
 msg.attach(part)
