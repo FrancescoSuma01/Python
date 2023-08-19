@@ -1,0 +1,32 @@
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.application import MIMEApplication
+
+my_email = "mail@mittente.com"
+password = "LaTuaPasswordSpecificadellApp"
+
+connection = smtplib.SMTP("smtp.gmail.com", 587)
+connection.starttls()
+connection.login(user=my_email, password=password)
+
+subject = "Oggetto della Mail"
+message = "Body della mail"
+
+msg = MIMEMultipart()
+msg["Subject"] = subject
+msg["From"] = my_email
+msg["To"] = "mail@destinatario.com"
+
+# Aggiungi il testo del messaggio
+msg.attach(MIMEText(message, "plain"))
+
+# Aggiungi l'allegato del documento di testo
+with open("path_del_tuo_documento.txt", "rb") as f:
+    part = MIMEApplication(f.read(), Name="documento.txt")
+part["Content-Disposition"] = f"attachment; filename=documento.txt"
+msg.attach(part)
+
+connection.sendmail(from_addr=my_email, to_addrs="mail@destinatario.com", msg=msg.as_string())
+
+connection.quit()
